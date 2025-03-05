@@ -10,21 +10,21 @@ import { Toaster } from "@/components/ui/toaster"
 
 const inter = Inter({ subsets: ["latin"] })
 
-// export const metadata: Metadata = {
-//   title: "Chuddy Buddy",
-//   description: "Track and manage your expenses",
-//   manifest: "/manifest.json",
-//   themeColor: [
-//     { media: "(prefers-color-scheme: light)", color: "white" },
-//     { media: "(prefers-color-scheme: dark)", color: "#1f2937" },
-//   ],
-//   viewport: "width=device-width, initial-scale=1, maximum-scale=1",
-//   appleWebApp: {
-//     capable: true,
-//     statusBarStyle: "default",
-//     title: "Chuddy Buddy",
-//   },
-// }
+export const metadata: Metadata = {
+  title: "Chuddy Buddy",
+  description: "Track and manage your expenses",
+  manifest: "/manifest.json",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "#1f2937" },
+  ],
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Chuddy Buddy",
+  },
+}
 
 export default function RootLayout({
   children,
