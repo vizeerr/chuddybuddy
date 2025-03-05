@@ -3,7 +3,6 @@ import withPWA from 'next-pwa';
 let userConfig;
 try {
   userConfig = await import('./v0-user-next.config');
-  // If the module has a default export, use it.
   userConfig = userConfig.default || userConfig;
 } catch (e) {
   // ignore error if the file doesn't exist
@@ -31,13 +30,13 @@ mergeConfig(nextConfig, userConfig);
 
 function mergeConfig(baseConfig, userConfig) {
   if (!userConfig) return;
-  // If userConfig is an array, warn and merge the first element only
+  // If userConfig is an array, log a warning and use the first element.
   if (Array.isArray(userConfig)) {
     console.warn('User config is an array; merging first element only.');
     userConfig = userConfig[0];
   }
   for (const key in userConfig) {
-    // Skip numeric keys that may have come from an array-like object
+    // Skip numeric keys if any exist
     if (!isNaN(Number(key))) continue;
     if (
       typeof baseConfig[key] === 'object' &&
@@ -54,9 +53,8 @@ function mergeConfig(baseConfig, userConfig) {
   }
 }
 
-// Optionally remove keys that might be causing issues (like 'eslint')
-// This is optional: if you need ESLint settings only for Next.js and not passed to next-pwa, remove it.
-const { eslint, ...cleanNextConfig } = nextConfig;
+// Remove keys that are not valid for the GenerateSW plugin.
+const { eslint, typescript, ...cleanNextConfig } = nextConfig;
 
 export default withPWA({
   dest: 'public', // output directory for service worker files
