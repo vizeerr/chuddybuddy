@@ -1,11 +1,8 @@
-import withPWA from 'next-pwa';
-
-let userConfig;
+let userConfig = undefined
 try {
-  userConfig = await import('./v0-user-next.config');
-  userConfig = userConfig.default || userConfig;
+  userConfig = await import('./v0-user-next.config')
 } catch (e) {
-  // ignore error if the file doesn't exist
+  // ignore error
 }
 
 /** @type {import('next').NextConfig} */
@@ -24,42 +21,28 @@ const nextConfig = {
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
   },
-};
+}
 
-mergeConfig(nextConfig, userConfig);
+mergeConfig(nextConfig, userConfig)
 
-function mergeConfig(baseConfig, userConfig) {
-  if (!userConfig) return;
-  // If userConfig is an array, log a warning and use the first element.
-  if (Array.isArray(userConfig)) {
-    console.warn('User config is an array; merging first element only.');
-    userConfig = userConfig[0];
+function mergeConfig(nextConfig, userConfig) {
+  if (!userConfig) {
+    return
   }
+
   for (const key in userConfig) {
-    // Skip numeric keys if any exist
-    if (!isNaN(Number(key))) continue;
     if (
-      typeof baseConfig[key] === 'object' &&
-      baseConfig[key] !== null &&
-      !Array.isArray(baseConfig[key])
+      typeof nextConfig[key] === 'object' &&
+      !Array.isArray(nextConfig[key])
     ) {
-      baseConfig[key] = {
-        ...baseConfig[key],
+      nextConfig[key] = {
+        ...nextConfig[key],
         ...userConfig[key],
-      };
+      }
     } else {
-      baseConfig[key] = userConfig[key];
+      nextConfig[key] = userConfig[key]
     }
   }
 }
 
-// Remove keys that are not valid for the GenerateSW plugin.
-const { eslint, typescript, ...cleanNextConfig } = nextConfig;
-
-export default withPWA({
-  dest: 'public', // output directory for service worker files
-  register: true, // automatically register the service worker
-  skipWaiting: true, // activate the new service worker immediately
-  disable: process.env.NODE_ENV === 'development', // disable in development mode
-  ...cleanNextConfig,
-});
+export default nextConfig
