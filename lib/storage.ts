@@ -91,11 +91,11 @@ export const initializeStorage = () => {
   if (typeof window === "undefined") return
 
   if (!localStorage.getItem("users")) {
-    localStorage.setItem("users", JSON.stringify(sampleUsers))
+    localStorage.setItem("users", '')
   }
 
   if (!localStorage.getItem("expenses")) {
-    localStorage.setItem("expenses", JSON.stringify(sampleExpenses))
+    localStorage.setItem("expenses", '')
   }
 
   if (!localStorage.getItem("pendingOperations")) {

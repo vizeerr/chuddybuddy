@@ -138,7 +138,7 @@ export function UserList() {
                       <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
                     </Avatar>
                     <div>
-                      <div className="font-medium capitalize">{user.name}</div>
+                      <div className="font-medium">{user.name}</div>
                       <div className="text-sm text-muted-foreground">{user.email}</div>
                       {user.phone && <div className="text-xs text-muted-foreground">{user.phone}</div>}
                     </div>

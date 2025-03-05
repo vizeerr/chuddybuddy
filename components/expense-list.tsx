@@ -113,22 +113,22 @@ export function ExpenseList() {
           {filteredExpenses.length > 0 ? (
             <div className="divide-y">
               {filteredExpenses.map((expense) => (
-                <div key={expense.id} className="flex flex-col justify-between gap-2 p-4 sm:flex-col sm:items-end">
-                  <div className="flex items-center gap-3">
+                <div key={expense.id} className="flex flex-col justify-between gap-2 p-4 sm:flex-row sm:items-center">
+                  <div className="flex items-start gap-3">
                     <Avatar className="h-9 w-9">
                       <AvatarFallback>{getInitials(expense.userName)}</AvatarFallback>
                     </Avatar>
                     <div>
                       <div className="font-medium capitalize">{expense.title}</div>
-                      <div className="text-sm text-muted-foreground capitalize">{expense.description}</div>
-                      <div className="text-xs text-muted-foreground capitalize">
+                      <div className="text-sm text-muted-foreground capitalize">
                         {new Date(expense.date).toLocaleDateString()} {expense.time} • {expense.userName}
                       </div>
+                      <div className="mt-1 text-xs text-muted-foreground capitalize">{expense.description}</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
                     <Badge variant="outline">{expense.category}</Badge>
-                    <div className="text-right font-semibold text-lg">{formatCurrency(expense.amount)}</div>
+                    <div className="text-right font-medium">{formatCurrency(expense.amount)}</div>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button variant="ghost" size="icon" className="h-8 w-8">
