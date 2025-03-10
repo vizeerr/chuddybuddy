@@ -31,7 +31,7 @@ export function RecentExpenses() {
   // Sort expenses by date (newest first) and take the first 5
   const recentExpenses = [...expenses]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 5)
+
 
   const filteredExpenses = recentExpenses.filter(
     (expense) =>

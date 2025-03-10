@@ -1,7 +1,7 @@
 "use client"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Menu, X, Home, DollarSign, Users, BarChart3 } from "lucide-react"
+import { Menu, X, Home, IndianRupee, Users, BarChart3 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { useSidebar } from "./sidebar-provider"
@@ -10,7 +10,7 @@ import { SyncStatus } from "./sync-status"
 
 const navItems = [
   { name: "Dashboard", href: "/", icon: Home },
-  { name: "Expenses", href: "/expenses", icon: DollarSign },
+  { name: "Expenses", href: "/expenses", icon: IndianRupee },
   { name: "Users", href: "/users", icon: Users },
   { name: "Reports", href: "/reports", icon: BarChart3 },
 ]
@@ -62,8 +62,10 @@ export function MobileNav() {
             <span>Chuddy Buddy</span>
           </Link>
           <div className="flex items-center gap-2">
-            <div className=" md:flex gap-2 items-center hidden">
-              <SyncStatus/>
+            <div className=" flex gap-2 items-center ">
+              <div className="md:flex hidden">
+                <SyncStatus/>
+              </div>
               <ThemeToggle />
             </div>
             <nav className="hidden lg:flex">

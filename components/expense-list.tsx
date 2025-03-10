@@ -30,14 +30,15 @@ export function ExpenseList() {
   const [searchTerm, setSearchTerm] = useState("")
   const [categoryFilter, setCategoryFilter] = useState("All Categories")
   const [userFilter, setUserFilter] = useState("All Users")
+  const [sortOrder, setSortOrder] = useState("Latest First")
   const [expenseToDelete, setExpenseToDelete] = useState<string | null>(null)
 
-  // Get unique categories
+  // Get unique categories and users
   const categories = ["All Categories", ...new Set(expenses.map((expense) => expense.category))]
-
-  // Get unique users
   const userOptions = ["All Users", ...users.map((user) => user.name)]
+  const sortOptions = ["Latest First", "Oldest First"]
 
+  // Filter expenses based on search, category, and user
   const filteredExpenses = expenses.filter((expense) => {
     const matchesSearch =
       expense.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -49,6 +50,15 @@ export function ExpenseList() {
     const matchesUser = userFilter === "All Users" || expense.userName === userFilter
 
     return matchesSearch && matchesCategory && matchesUser
+  })
+
+  // Sort expenses based on combined date and time
+  const sortedExpenses = filteredExpenses.sort((a, b) => {
+    const dateTimeA = new Date(`${a.date} ${a.time}`)
+    const dateTimeB = new Date(`${b.date} ${b.time}`)
+    return sortOrder === "Latest First" 
+      ? dateTimeB.getTime() - dateTimeA.getTime() 
+      : dateTimeA.getTime() - dateTimeB.getTime()
   })
 
   const handleEdit = (id: string) => {
@@ -106,13 +116,25 @@ export function ExpenseList() {
                 ))}
               </SelectContent>
             </Select>
+            <Select value={sortOrder} onValueChange={setSortOrder}>
+              <SelectTrigger className="w-full sm:w-[160px]">
+                <SelectValue placeholder="Sort by Date" />
+              </SelectTrigger>
+              <SelectContent>
+                {sortOptions.map((option) => (
+                  <SelectItem key={option} value={option}>
+                    {option}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
 
         <Card className="overflow-hidden">
-          {filteredExpenses.length > 0 ? (
+          {sortedExpenses.length > 0 ? (
             <div className="divide-y">
-              {filteredExpenses.map((expense) => (
+              {sortedExpenses.map((expense) => (
                 <div key={expense.id} className="flex flex-col justify-between gap-2 p-4 sm:flex-row sm:items-center">
                   <div className="flex items-start gap-3">
                     <Avatar className="h-9 w-9">
@@ -174,4 +196,3 @@ export function ExpenseList() {
     </>
   )
 }
-

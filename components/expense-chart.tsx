@@ -110,7 +110,7 @@ export function ExpenseChart() {
         <CardDescription>View your spending patterns over time</CardDescription>
       </CardHeader>
       <CardContent>
-        <Tabs defaultValue="monthly">
+        <Tabs defaultValue="weekly">
           <TabsList className="mb-4">
             <TabsTrigger value="weekly">Weekly</TabsTrigger>
             <TabsTrigger value="monthly">Monthly</TabsTrigger>
